@@ -14,6 +14,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -92,34 +94,45 @@ fun NotesScreen() {
 
                 LazyColumn(modifier = Modifier.weight(1f)) {
                     items(notes) { note ->
-                        ListItem(
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(15.dp))
-                                .padding(
-                                    vertical = 5.dp
-                                ),
-                            headlineContent = {
-                                Text(
-                                    text = note, style = TextStyle(
-                                        color = Color.White, fontWeight = FontWeight.SemiBold
+                        Card(
+                            shape = RoundedCornerShape(15.dp),
+                            elevation = CardDefaults.cardElevation(8.dp),
+                            modifier = Modifier.padding(vertical = 5.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = Color.LightGray,
+                            )
+                        ) {
+                            ListItem(
+                                modifier = Modifier
+                                    .padding(
+                                        vertical = 5.dp
                                     )
-                                )
-                            },
-                            colors = ListItemDefaults.colors(
-                                containerColor = Color.Gray,
-                                trailingIconColor = Color.Red,
-                                headlineColor = Color.White,
-                            ),
-                            trailingContent = {
-                                Icon(
-                                    imageVector = Icons.Filled.Delete,
-                                    contentDescription = "Delete Note",
-                                    modifier = Modifier.clickable {
-                                        notes.remove(note)
-                                    },
-                                )
-                            },
-                        )
+                                    .clip(RoundedCornerShape(15.dp)),
+                                headlineContent = {
+                                    Text(
+                                        text = note, style = TextStyle(
+                                            color = Color.Black,
+                                            fontWeight = FontWeight.SemiBold,
+                                            fontSize = 18.sp,
+                                        )
+                                    )
+                                },
+                                colors = ListItemDefaults.colors(
+                                    containerColor = Color.LightGray,
+                                    trailingIconColor = Color.Red,
+                                    headlineColor = Color.White,
+                                ),
+                                trailingContent = {
+                                    Icon(
+                                        imageVector = Icons.Filled.Delete,
+                                        contentDescription = "Delete Note",
+                                        modifier = Modifier.clickable {
+                                            notes.remove(note)
+                                        },
+                                    )
+                                },
+                            )
+                        }
                     }
                 }
             }
