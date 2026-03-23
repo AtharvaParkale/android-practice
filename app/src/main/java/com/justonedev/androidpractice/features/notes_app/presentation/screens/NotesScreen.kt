@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.justonedev.androidpractice.features.notes_app.presentation.viewmodel.NotesEvent
 import com.justonedev.androidpractice.features.notes_app.presentation.viewmodel.NotesViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -67,7 +68,9 @@ fun NotesScreen(viewModel: NotesViewModel = viewModel()) {
 
             Button(
                 onClick = {
-                    viewModel.addNote(text)
+//                    viewModel.addNote(text)
+
+                    viewModel.onEvent(event = NotesEvent.AddNote(text))
                     text = ""
                 }, enabled = text.isNotEmpty()
             ) {
@@ -89,14 +92,19 @@ fun NotesScreen(viewModel: NotesViewModel = viewModel()) {
                         elevation = CardDefaults.cardElevation(8.dp),
                         modifier = Modifier.padding(vertical = 5.dp)
                     ) {
-                        ListItem(headlineContent = { Text(note.text) }, trailingContent = {
-                            Icon(
-                                imageVector = Icons.Default.Delete,
-                                contentDescription = "Delete",
-                                modifier = Modifier.clickable {
-                                    viewModel.deleteNote(note)
-                                })
-                        })
+                        ListItem(
+                            headlineContent = { Text(note.text) },
+                            trailingContent = {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = "Delete",
+                                    modifier = Modifier.clickable {
+//                                        viewModel.deleteNote(note)
+                                        viewModel.onEvent(event = NotesEvent.DeleteNote(note))
+                                    },
+                                )
+                            },
+                        )
                     }
                 }
             }

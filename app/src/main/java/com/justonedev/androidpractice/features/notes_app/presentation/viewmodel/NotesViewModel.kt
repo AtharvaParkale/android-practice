@@ -13,10 +13,23 @@ class NotesViewModel : ViewModel() {
 
     fun addNote(text: String) {
         val newNote = Note(id = idCounter++, text = text)
-        _notes.value = _notes.value + newNote
+        _notes.value += newNote
     }
 
     fun deleteNote(note: Note) {
-        _notes.value = _notes.value - note
+        _notes.value -= note
+    }
+
+    fun onEvent(event: NotesEvent) {
+        when (event) {
+            is NotesEvent.AddNote -> {
+                val newNote = Note(id = idCounter++, text = event.text)
+                _notes.value = _notes.value + newNote
+            }
+
+            is NotesEvent.DeleteNote -> {
+                _notes.value = _notes.value - event.note
+            }
+        }
     }
 }
