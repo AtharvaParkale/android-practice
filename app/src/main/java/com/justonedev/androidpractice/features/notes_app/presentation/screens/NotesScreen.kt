@@ -2,7 +2,6 @@ package com.justonedev.androidpractice.features.notes_app.presentation.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,20 +29,36 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.room.Room
+import com.justonedev.androidpractice.features.notes_app.data.NotesDatabase
+import com.justonedev.androidpractice.features.notes_app.data.provideDatabase
 import com.justonedev.androidpractice.features.notes_app.presentation.viewmodel.NotesEvent
 import com.justonedev.androidpractice.features.notes_app.presentation.viewmodel.NotesViewModel
+import com.justonedev.androidpractice.features.notes_app.presentation.viewmodel.NotesViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun NotesScreen(viewModel: NotesViewModel = viewModel()) {
+fun NotesScreen() {
+
+    val context = LocalContext.current
+
+    val db = remember { provideDatabase(context) }
+
+    val factory = remember {
+        NotesViewModelFactory(db.notesDao())
+    }
+
+    val viewModel: NotesViewModel = viewModel(factory = factory)
 
     var text by remember { mutableStateOf("") }
 
-    val notes by viewModel.notes.collectAsState()
+
+    val notes by viewModel.localNotes.collectAsState(initial = emptyList())
 
     Scaffold(
         modifier = Modifier.fillMaxSize(), topBar = {
