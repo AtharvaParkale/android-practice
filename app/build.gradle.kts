@@ -74,4 +74,8 @@ dependencies {
 
     // Material Icons
     implementation(libs.androidx.material.icons.extended)
+
+    // Retrofit SetUp
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 }

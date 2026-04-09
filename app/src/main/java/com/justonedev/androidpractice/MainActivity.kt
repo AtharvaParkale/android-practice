@@ -1,5 +1,6 @@
 package com.justonedev.androidpractice
 
+import com.justonedev.androidpractice.features.flow_example.example_one.FlowDemoScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -7,8 +8,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.justonedev.androidpractice.features.notes_app.presentation.screens.NotesScreen
 import com.justonedev.androidpractice.ui.theme.AndroidPracticeTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,7 +16,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidPracticeTheme {
-                NotesScreen()
+//                NotesScreen()
+                FlowDemoScreen()
             }
         }
     }
@@ -51,15 +51,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $name!",
-        modifier = modifier
+        text = "Hello $name!", modifier = modifier
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AndroidPracticeTheme {
-        Greeting("Android")
-    }
 }
